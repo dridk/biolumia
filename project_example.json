@@ -1,0 +1,29 @@
+{
+	
+"project_name": "Test",
+
+"group_files": [
+
+	{
+		"name": "set1",
+		"files": ["C:/sacha/Dev/biolumia/data/m997dd.fts","C:/sacha/Dev/biolumia/data/s998dd.fts"]
+	},
+
+	{
+		"name": "set2",
+		"files": ["C:/sacha/Dev/biolumia/data/m997dd.fts"]
+	}
+],
+  
+
+"areas": [
+	{
+		"x": 10,
+		"y": 10,
+		"width": 100,
+		"height": 100
+	}
+]
+
+
+}
