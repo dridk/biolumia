@@ -1,0 +1,20 @@
+Metadata-Version: 2.1
+Name: biolumia
+Version: 0.0.1
+Summary: GUI to visualize and process variant data
+Home-page: https://github.com/labsquare/biolumia
+Author: Sacha Schutz
+Author-email: sacha@labsquare.org
+License: GPL
+Description: UNKNOWN
+Keywords: GUI,health
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Science/Research
+Classifier: Intended Audience :: Healthcare Industry
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Description-Content-Type: text/markdown
+Provides-Extra: dev

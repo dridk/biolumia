@@ -1,0 +1,6 @@
+PySide2>=5.11.2
+
+[dev]
+pytest-cov>=2.6.1
+pytest-qt>=3.2.2
+pytest>=4.0.1
