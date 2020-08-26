@@ -45,7 +45,9 @@ class FilesWidget(QTreeWidget):
     def selected_files(self):
         for item in self.file_items:
             if item.checkState(0) == Qt.Checked:
-                yield item.data(0, Qt.UserRole)
+                group = item.parent().text(0)
+                file  = item.data(0, Qt.UserRole)
+                yield file, group
 
     @Slot()
     def on_item_changed(self):
@@ -269,8 +271,9 @@ class ImageViewer(QGraphicsView):
         if event.key() == Qt.Key_Delete:
             self.rem_selected_areas()
 
+
+
     def set_image(self, filename):
-        print("set ", filename)
         self.img.load(filename)
         self.imgitem.setPixmap(self.img.to_pixmap())
 
@@ -282,12 +285,10 @@ class ImageViewer(QGraphicsView):
             yield rect
 
 
-
-
-
     def setBrightness(self, value):
-        self.imgitem.img.brightness = value
-        self.imgitem.refresh()
+        self.img.brightness = value
+        self.imgitem.setPixmap(self.img.to_pixmap())
+
 
 
 class AbstractPlotWidget(QWidget):
@@ -295,7 +296,7 @@ class AbstractPlotWidget(QWidget):
         super().__init__(parent)
         self.vlayout = QVBoxLayout()
         self.fig = Figure(
-            figsize=(7, 5), dpi=65, facecolor=(1, 1, 1), edgecolor=(0, 0, 0)
+            figsize=(5, 5), dpi=100, facecolor=(1, 1, 1), edgecolor=(0, 0, 0)
         )
         self.canvas = FigureCanvas(self.fig)
 
@@ -327,7 +328,7 @@ class HistogramWidget(AbstractPlotWidget):
         ax = figure.add_subplot(111)
         ax.grid(True)
         print(self.data)
-        sns.lineplot(x="index", y="value", data=self.data, ax=ax)
+        sns.lineplot(x="index", y="value", hue="group", data=self.data, ax=ax)
 
         #ax.plot(self.data[0], self.data[1], linestyle="-", marker="o")
 
@@ -338,12 +339,19 @@ class MainWindow(QMainWindow):
 
         toolbar = self.addToolBar("main")
 
+        self.slider = QSlider(Qt.Horizontal)
+        self.slider.setRange(1, 100)
+
         toolbar.addAction("Open project", self.on_open_project)
         toolbar.addAction("Save project")
 
         toolbar.addAction("add area", self.on_add_area)
         toolbar.addAction("rem area", self.on_rem_area)
-        toolbar.addAction("Compute", self.on_compute)
+        compute_action = toolbar.addAction("Compute", self.on_compute)
+
+        compute_action.setShortcut(QKeySequence(Qt.Key_F5))
+
+        toolbar.addWidget(self.slider)
 
 
 
@@ -352,9 +360,11 @@ class MainWindow(QMainWindow):
         self.histo_view = HistogramWidget()
         self.files_view = FilesWidget()
 
+        self.slider.valueChanged.connect(self.image_view.setBrightness)
+
 
         self.addWidget(self.files_view, Qt.LeftDockWidgetArea)
-        self.addWidget(self.histo_view)
+        self.addWidget(self.histo_view, Qt.RightDockWidgetArea)
 
 
         # fig.canvas.draw()
@@ -399,14 +409,19 @@ class MainWindow(QMainWindow):
         files = list(self.files_view.selected_files())
         areas = list(self.image_view.get_areas())
 
-        y = []
-        x = []
-        max_index = 100
-        for file in files:
+        y  = []
+        x  = []
+        gp = []
+        max_index = 1000
+        for item in files:
+            file, group = item
             x += list(range(0, max_index))
             y += compute_curves(file, areas, max_index)
-        
-        self.df = pd.DataFrame({"index":x, "value":y})
+            gp+= [group] * max_index
+
+            print(len(x), len(gp))
+
+        self.df = pd.DataFrame({"index":x, "value":y, "group": gp})
         self.histo_view.data = self.df
         self.histo_view.refresh()
 
