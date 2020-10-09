@@ -423,6 +423,7 @@ class MainWindow(QMainWindow):
 
         self.df = pd.DataFrame({"index":x, "value":y, "group": gp})
         self.histo_view.data = self.df
+        self.df.to_csv("test.csv")
         self.histo_view.refresh()
 
 

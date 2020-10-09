@@ -5,13 +5,24 @@
 "group_files": [
 
 	{
-		"name": "set1",
-		"files": ["C:/sacha/Dev/biolumia/data/m997dd.fts","C:/sacha/Dev/biolumia/data/s998dd.fts"]
+		"name": "ADN_nu",
+		"files": [
+			"C:/sacha/Dev/biolumia/data/S836 Dd 1S30SEC2F2B_000f.FTS",
+			"C:/sacha/Dev/biolumia/data/S837 Dd 1S30SEC2F2B_000f.FTS",
+			"C:/sacha/Dev/biolumia/data/S838 Dd 1S30SEC2F2B_000f.FTS"
+
+		]
 	},
 
 	{
-		"name": "set2",
-		"files": ["C:/sacha/Dev/biolumia/data/m997dd.fts"]
+		"name": "Vector",
+		"files": [
+			"C:/sacha/Dev/biolumia/data/S843 Dd 1S30SEC2F2B_000f.FTS",
+			"C:/sacha/Dev/biolumia/data/S844 Dd 1S30SEC2F2B_000f.FTS",
+			"C:/sacha/Dev/biolumia/data/S845 Dd 1S30SEC2F2B_000f.FTS"
+
+
+		]
 	}
 ],
   
